@@ -317,7 +317,6 @@ EOF
         done
     fi
 
-    makefs -t cd9660 -o R,L=cidata "${VM_DS_PATH}/${_name}/seed.iso" ${_cloud_init_dir} || util::err "Can't write seed.iso for cloud-init"
     config::set "${_name}" "disk${_num}_type" "ahci-cd"
     config::set "${_name}" "disk${_num}_name" "seed.iso"
     config::set "${_name}" "disk${_num}_dev" "file"

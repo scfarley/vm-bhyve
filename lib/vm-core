@@ -607,6 +607,7 @@ core::stopall(){
 core::start(){
     local _name
     local _done
+    local _rc
 
     cmd::parse_args "$@"
     shift $?
@@ -624,6 +625,10 @@ core::start(){
     while [ -n "${_name}" ]; do
         [ -n "${_done}" ] && echo "Waiting ${vm_delay} second(s)" && sleep ${vm_delay}
         core::__start "${_name}"
+        _rc=$?
+        if [ ${_rc} -ne 0 ]; then
+            return ${_rc}
+        fi
         shift
         _name="$1"
         _done="1"

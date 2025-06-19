@@ -51,6 +51,11 @@ vm::run(){
     # bail out immediately if guest running
     vm::confirm_stopped "${_name}" "1" || exit 10
 
+    if [ -d "${VM_DS_PATH}/${_name}/.cloud-init" ] && [ ! -f "${VM_DS_PATH}/${_name}/seed.iso" ]; then
+      makefs -t cd9660 -o R,L=cidata "${VM_DS_PATH}/${_name}/seed.iso" "${VM_DS_PATH}/${_name}/.cloud-init" || util::err "Can't write seed.iso for cloud-init"
+      util::log "guest" "${_name}" "created ${VM_DS_PATH}/${_name}/seed.iso for cloud-init"
+    fi
+
     config::load "${VM_DS_PATH}/${_name}/${_name}.conf"
     config::get "_memory" "memory"
     config::get "_loader" "loader"

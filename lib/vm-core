@@ -264,7 +264,7 @@ core::create_cloud_init(){
     mkdir -p "${_cloud_init_dir}"
 
     if [ -n "${_network_config}" ]; then
-        # Example netconfig param: "interface=vtnet0;ip=10.0.0.2/24;gateway=10.0.0.1;nameservers=1.1.1.1,8.8.8.8;searchdomains=company.lab,test.lab"
+        # Example netconfig param: "interface=vtnet0;ip=10.0.0.2/24;gateway=10.0.0.1;nameservers=1.1.1.1,8.8.8.8;searchdomains=example.com,example.org"
         _network_config_interface="$(echo "${_network_config}" | \
             grep -oE 'interface=[^;]*' | sed 's/^interface=//')";
         _network_config_ipaddress="$(echo "${_network_config}" | \

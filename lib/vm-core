@@ -264,7 +264,7 @@ core::create_cloud_init(){
     mkdir -p "${_cloud_init_dir}"
 
     if [ -n "${_network_config}" ]; then
-        # Example netconfig param: "interface=vtnet0;ip=10.0.0.2/24;gateway=10.0.0.1;nameservers=1.1.1.1,8.8.8.8"
+        # Example netconfig param: "interface=vtnet0;ip=10.0.0.2/24;gateway=10.0.0.1;nameservers=1.1.1.1,8.8.8.8;searchdomains=example.com,example.org"
         _network_config_interface="$(echo "${_network_config}" | \
             grep -oE 'interface=[^;]*' | sed 's/^interface=//')";
         _network_config_ipaddress="$(echo "${_network_config}" | \
@@ -273,6 +273,8 @@ core::create_cloud_init(){
             grep -oE 'gateway=[^;]*' | sed 's/^gateway=//')"
         _network_config_nameservers="$(echo "${_network_config}" | \
             grep -oE 'nameservers=[^;]*' | sed 's/^nameservers=//')"
+        _network_config_searchdomains="$(echo "${_network_config}" | \
+            grep -oE 'searchdomains=[^;]*' | sed 's/^searchdomains=//')"
         _network_config_hostname="$(echo "${_network_config}" | \
             grep -oE 'hostname=[^;]*' | sed 's/^hostname=//')"
 
@@ -292,7 +294,7 @@ ethernets:
       - ${_network_config_ipaddress}
     gateway4: ${_network_config_gateway}
     nameservers:
-      search: []
+      search: [${_network_config_searchdomains}]
       addresses: [${_network_config_nameservers}]
 EOF
     fi

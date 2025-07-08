@@ -317,7 +317,7 @@ Restart your vm.
 
 ## Windows Support
 
-Please see the Windows section in the [Wiki](https://github.com/churchers/vm-bhyve/wiki/Running-Windows)
+Please see the Windows section in the [Wiki](https://github.com/freebsd/vm-bhyve/wiki/Running-Windows)
 
 ## Autocomplete
 

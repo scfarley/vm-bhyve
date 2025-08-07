@@ -168,7 +168,7 @@ Usage: vm ...
     start [-fi] <name> [...]
     stop <name> [...]
     restart <name>
-    console <name> [com1|com2]
+    console [-w] <name> [com1|com2]
     configure <name>
     rename <name> <new-name>
     add [-d device] [-t type] [-s size|switch] <name>

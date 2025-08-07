@@ -111,6 +111,7 @@
 .Ar name
 .Nm
 .Cm console
+.Op Fl w
 .Ar name
 .Op Ar com1|com2
 .Nm
@@ -770,7 +771,12 @@ it would when using
 .Sy stop/start .
 Note that guest configuration is not re-loaded, so all guest settings will be as they were
 when the guest was originally started.
-.It Cm console Ar name Op Ar com1|com2
+.It Xo
+.Cm console
+.Op Fl w
+.Ar name
+.Op Ar com1|com2
+.Xc
 Connect to the console of the named virtual machine.
 Without network access, this is the primary way of connecting to the guest once
 it is running.
@@ -784,6 +790,11 @@ This looks for the
 device associated with the virtual machine, and connects to it with
 .Xr cu 1 .
 Use ~+Ctrl-D to exit the console and return to the host.
+.Pp
+If the
+.Ar -w
+option is specified, wait until the virtual machine starts before connecting
+to the console.
 .It Cm rename Ar name Ar new-name
 Renames the specified virtual machine.
 The guest must be stopped to use this function.

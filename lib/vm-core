@@ -923,6 +923,7 @@ core::console(){
     datastore::get_guest "${_name}" || util::err "${_name} doesn't appear to be a valid virtual machine"
 
     if [ -n "${_wait_for_vm}" ]; then
+        echo "Waiting for ${_name} to start..."
         # wait for the VM to start; /dev/vmm/${_name} usually appears within 50 ms
         sleep 0.05
         while [ ! -e "/dev/vmm/${_name}" ]; do

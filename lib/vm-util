@@ -281,7 +281,7 @@ util::log(){
     esac
 
     while [ -n "$1" ]; do
-      echo "$(date +'%b %d %T'): $1" >> "${_file}"
+      echo "$(date -Iseconds): $1" >> "${_file}"
       shift
     done
 }

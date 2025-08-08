@@ -682,7 +682,7 @@ If the guest is running, the output also shows the amount of host memory
 currently in use, and additional network details including bytes sent/received
 for each virtual interface.
 .It Xo
-.Cm install 
+.Cm install
 .Op Fl fi
 .Ar name Ar iso
 .Xc
@@ -1006,7 +1006,7 @@ parameter to specify the source snapshot.
 .It Fl t
 Triple snapshot mode. This will send both a full snapshot, and one incremental, before shutting the guest down
 and doing a final incremental send. This may be useful for large or busy guests where there could be a large number
-of chages during the initial full send. The idea is that the first incremental send will bring the remote guest nearly 
+of chages during the initial full send. The idea is that the first incremental send will bring the remote guest nearly
 up to date, sending changes that have occured during the lengthy inital full send. This should reduce the size of the
 final incremental send, minimising the amount of time the guest is powered off.
 .It Fl x
@@ -1015,9 +1015,9 @@ Destroy the local guest once the migration is complete.
 When running the second stage of migration, this parameter is used to specify the name of the snapshot
 to base the incremental send on. This snapshot must exist on both hosts.
 .El
-.It Xo 
-.Cm iso 
-.Op Ar -d datastore 
+.It Xo
+.Cm iso
+.Op Ar -d datastore
 .Op Ar url
 .Xc
 List all the ISO files currently stored in the
@@ -1031,7 +1031,7 @@ If a
 is specified, instead of listing ISO files, it attempts to download the given file using
 .Xr fetch 1
 to the default datastore. The target datasource can be changed by specifying
-.Sy -d datastore 
+.Sy -d datastore
 with
 .Sy url .
 .Cm img
@@ -1044,7 +1044,7 @@ directory.
 This is often useful during guest installation, allowing you to copy and paste
 the image filename.
 .Pp
-If a 
+If a
 .Sy url
 is specified, instead of listing the image files, it attempts to download the given file
 using
@@ -1189,7 +1189,7 @@ and
 .Sy G
 suffixes.
 .It wired_memory
-Set this to yes in order to have the requested amount of memory wired to the 
+Set this to yes in order to have the requested amount of memory wired to the
 guest.
 .It hostbridge
 This option allows you to specify the type of hostbridge used for the guest
@@ -1322,8 +1322,8 @@ To use a disk image that is stored anywhere else, you can specify the full path
 in this option, and configure the device as
 .Sy custom .
 .Pp
-To use an established iscsi device, specify a target 'session[/lun]' 
-(default /0) which matches a unique session from the 
+To use an established iscsi device, specify a target 'session[/lun]'
+(default /0) which matches a unique session from the
 .Pf ' Xr iscsictl 8
 -L' command output, and configure the device as
 .Sy iscsi .
@@ -1335,17 +1335,17 @@ and a sparse file, located in the guest directory, will be used as the disk
 image.
 Other options include:
 .Sy zvol
-or 
+or
 .Sy sparse-zvol
 (which will use a ZVOL as the disk image, created directly under the guest
 dataset),
-.Sy custom , 
-and 
+.Sy custom ,
+and
 .Sy iscsi .
 .Pp
 When using
 .Sy custom ,
-the 
+the
 .Pa diskX_name
 parameter must be set to the full path to the image file or device.
 .Pp
@@ -1545,8 +1545,8 @@ this mouse may not supported by older guests.
 .It sound
 Set this option to
 .Sy yes
-in order to provide HD Audio Emulation to the guest. Please see 
-.Sy bhyve(8) 
+in order to provide HD Audio Emulation to the guest. Please see
+.Sy bhyve(8)
 for details.
 .It sound_play
 Set this to the desired audio output device of the host to the guest. Defaults to

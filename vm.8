@@ -716,7 +716,7 @@ option is specified, the guest will be started in the foreground on stdio.
 The
 .Ar -i
 option starts the guest in interactive mode.
-This requires tmux, and the global
+If the global
 .Sy console
 setting must be set likewise.
 In interactive mode the guest is started on a foreground tmux session, but this
@@ -742,14 +742,23 @@ interface, based on the virtual switch specified in the guest configuration.
 If the
 .Ar -f
 option is specified, the guest will be started in the foreground on stdio.
+.Pp
 The
 .Ar -i
 option starts the guest in interactive mode.
-This requires tmux, and the global
+If the global
 .Sy console
-setting must be set likewise.
-In interactive mode the guest is started on a foreground
-tmux session, but this can be detached using the standard tmux commands.
+setting is set to tmux, the guest is started on a foreground tmux session,
+but this can be detached using the standard tmux commands. Otherwise,
+the guest is started in the background, and
+.Xr cu 1
+is launched to connect to the console.
+.Pp
+Both the
+.Ar -f
+option and
+.Ar -i
+option are ignored when attempting to start more than one VM.
 .It Cm stop Ar name Ar ...
 Stop a named virtual machine.
 All

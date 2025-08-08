@@ -903,14 +903,35 @@ core::rename(){
 # @param string _port the port to connect to (default = first in configuration)
 #
 core::console(){
-    local _name="$1"
-    local _port="$2"
-    local _console _tmux _tmux_cmd
+    local _name _port
+    local _console _tmux _tmux_cmd _wait_for_vm
+
+    while getopts w _opt ; do
+        case $_opt in
+            w) _wait_for_vm="1" ;;
+            *) util::usage ;;
+        esac
+    done
+
+    shift $((OPTIND - 1))
+
+    _name="$1"
+    _port="$2"
 
     [ -z "${_name}" ] && util::usage
 
     datastore::get_guest "${_name}" || util::err "${_name} doesn't appear to be a valid virtual machine"
-    [ ! -e "/dev/vmm/${_name}" ] && util::err "${_name} doesn't appear to be a running virtual machine"
+
+    if [ -n "${_wait_for_vm}" ]; then
+        echo "Waiting for ${_name} to start..."
+        # wait for the VM to start; /dev/vmm/${_name} usually appears within 50 ms
+        sleep 0.05
+        while [ ! -e "/dev/vmm/${_name}" ]; do
+            sleep 1
+        done
+    else
+        [ ! -e "/dev/vmm/${_name}" ] && util::err "${_name} doesn't appear to be a running virtual machine"
+    fi
 
     if [ -e "${VM_DS_PATH}/${_name}/console" ]; then
 

@@ -721,6 +721,11 @@ core::__start(){
         else
             ${_tmux_cmd} new -ds "${_tmux_name}" $0 _run -tf "${_name}" "${_iso}"
         fi
+    elif [ -n "${VM_OPT_INTERACTIVE}" ]; then
+        # interactive && console != tmux
+        # connect to the console using cu if global console setting not set to tmux
+        $0 _run "${_name}" "${_iso}" >/dev/null 2>&1 &
+        core::console -w "${_name}"
     else
         $0 _run "${_name}" "${_iso}" >/dev/null 2>&1 &
     fi

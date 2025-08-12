@@ -610,7 +610,7 @@ core::stopall(){
 core::start(){
     local _name
     local _done
-    local _rc
+    local _rc _rcsum=0
 
     cmd::parse_args "$@"
     shift $?
@@ -628,14 +628,19 @@ core::start(){
     while [ -n "${_name}" ]; do
         [ -n "${_done}" ] && echo "Waiting ${vm_delay} second(s)" && sleep ${vm_delay}
         core::__start "${_name}"
+
         _rc=$?
         if [ ${_rc} -ne 0 ]; then
-            return ${_rc}
+            _rcsum=$((${_rcsum} + ${_rc}))
         fi
         shift
+
         _name="$1"
         _done="1"
     done
+
+    # returns the number of VMs that failed to start
+    return ${_rcsum}
 }
 
 # actually start a virtual machine

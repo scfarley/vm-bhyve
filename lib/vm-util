@@ -170,6 +170,7 @@ Usage: vm ...
     restart <name>
     console [-w] <name> [com1|com2]
     configure <name>
+    edit <name>
     rename <name> <new-name>
     add [-d device] [-t type] [-s size|switch] <name>
     startall

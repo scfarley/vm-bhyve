@@ -141,6 +141,9 @@
 .Cm configure
 .Ar name
 .Nm
+.Cm edit
+.Ar name
+.Nm
 .Cm passthru
 .Nm
 .Cm clone
@@ -893,6 +896,8 @@ subcommand simply opens the virtual machine configuration file in your default
 editor, allowing you to easily make changes.
 Please note, changes do not take effect until the virtual machine is fully
 shutdown and restarted.
+.It Cm edit Ar name
+An alias to the configure subcommand.
 .It Cm passthru
 The
 .Cm passthru

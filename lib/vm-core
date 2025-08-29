@@ -709,7 +709,12 @@ core::__start(){
         return 1
     fi
 
-    echo "  * booting..."
+    if [ -e "${VM_DS_PATH}/${_name}/${_name}.save" ]; then
+        echo "  * found saved vm state resuming..."
+    else
+        echo "  * booting..."
+    fi
+
 
     # run background process to actually start bhyve
     # this will run as long as vm is running, including restarting bhyve after guest reboot

@@ -115,8 +115,10 @@ core::list(){
                     _run="Locked (${_run})"
                 fi
 
-                if [ "${_run}" = "Stopped" -a -n "${_running_only}" ]; then
-                    continue
+                if [ -n "${_running_only}" ]; then
+                    if [ "${_run}" = "Stopped" -o "${_run}" = "Suspended" ]; then
+                        continue
+                    fi
                 fi
 
                 if [ -n "${VM_OPT_VERBOSE}" ]; then

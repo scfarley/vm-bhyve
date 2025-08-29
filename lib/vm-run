@@ -947,7 +947,14 @@ vm::running_check(){
         fi
     done
 
-    setvar "${_var}" "Stopped"
+    datastore::get_guest "${_name}"
+
+    if [ -e "${VM_DS_PATH}/${_name}/${_name}.save" ]; then
+        setvar "${_var}" "Suspended"
+    else
+        setvar "${_var}" "Stopped"
+    fi
+
     return 1
 }
 

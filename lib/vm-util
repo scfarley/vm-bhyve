@@ -177,6 +177,7 @@ Usage: vm ...
     stop <name> [...]
     restart <name>
     suspend <name> [...]
+    discard [-f] <name>
     console [-w] <name> [com1|com2]
     configure <name>
     edit <name>

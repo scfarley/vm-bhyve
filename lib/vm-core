@@ -711,8 +711,8 @@ core::__start(){
         return 1
     fi
 
-    if [ -e "${VM_DS_PATH}/${_name}/${_name}.save" ]; then
-        echo "  * found saved vm state resuming..."
+    if util::check_bhyve_suspend >/dev/null 2>&1 && [ -e "${VM_DS_PATH}/${_name}/${_name}.save" ]; then
+        echo "  * found saved vm state, resuming..."
     else
         echo "  * booting..."
     fi
@@ -802,7 +802,7 @@ core::suspend(){
     local _name="$1"
     local _pid _loadpid
 
-    util::check_bhyve_suspend || util::err "bhyve on this host does not support suspend"
+    util::check_bhyve_suspend || util::err "unable to suspend the guest"
 
     [ -z "${_name}" ] && util::usage
 

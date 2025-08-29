@@ -232,8 +232,13 @@ vm::run(){
 
         # resume if saved vm state found
         if [ -e "${VM_DS_PATH}/${_name}/${_name}.save" ]; then
-            util::log "guest" "${_name}" "saved vm state found, resuming"
-            _opts="${_opts} -r ${VM_DS_PATH}/${_name}/${_name}.save"
+            if util::check_bhyve_suspend; then
+                util::log "guest" "${_name}" "saved vm state found, resuming"
+                _opts="${_opts} -r ${VM_DS_PATH}/${_name}/${_name}.save"
+            else
+                util::log "guest" "${_name}" \
+                    "saved vm state found but suspend/resume is unavailable or disabled, attempting to cold boot"
+            fi
         fi
 
         util::log "guest" "${_name}" " [bhyve options: ${_opts}]" \

@@ -120,6 +120,7 @@ util::check_bhyve_iommu(){
 #
 util::check_bhyve_suspend(){
     local _rc
+    local _suspend_enaled
 
     # userland
     bhyvectl 2>&1 | grep -q -- "--suspend="
@@ -135,6 +136,12 @@ util::check_bhyve_suspend(){
     if [ $_rc -gt 0 ]; then
         util::warn "bhyve on this host does not support suspend"
         return $_rc
+    fi
+
+    config::core::get "_suspend_enabled" "suspend" "no"
+    if ! util::yesno "${_suspend_enabled}"; then
+        util::warn "bhyve seems to support but administratively disabled in vm-bhyve config"
+        return 1
     fi
 
     return $_rc

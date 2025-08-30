@@ -945,9 +945,7 @@ core::discard(){
 
     # remove vm state file
     rm \
-        "${VM_DS_PATH}/${_name}/${_name}.save" \
-        "${VM_DS_PATH}/${_name}/${_name}.save.kern" \
-        "${VM_DS_PATH}/${_name}/${_name}.save.meta"
+        "${VM_DS_PATH}/${_name}/${_name}.save*" \
 
     exit $?
 }

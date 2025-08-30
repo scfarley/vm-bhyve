@@ -789,6 +789,43 @@ core::stop(){
     done
 }
 
+core::suspend(){
+    local _name="$1"
+    local _pid _loadpid
+
+    util::check_bhyve_suspend || util::err "bhyve on this host does not support suspend"
+
+    [ -z "${_name}" ] && util::usage
+
+    datastore::get_guest "${_name}" || util::err "${_name} doesn't appear to be a valid virtual machine"
+
+    while [ -n "${_name}" ]; do
+        if [ ! -e "/dev/vmm/${_name}" ]; then
+            util::warn "${_name} doesn't appear to be a running virtual machine"
+        else
+            _pid=$(pgrep -fx "bhyve: ${_name}")
+            _loadpid=$(pgrep -fl "grub-bhyve|bhyveload" | grep " ${_name}\$" |cut -d' ' -f1)
+
+            if [ -n "${_pid}" ]; then
+                echo "Suspending ${_name}"
+                # TODO: convert to function
+                hostname > "${VM_DS_PATH}/${_name}/suspending.lock"
+                bhyvectl --vm=${_name} --suspend=${VM_DS_PATH}/${_name}/${_name}.save >/dev/null 2>&1
+            elif [ -n "${_loadpind}" ]; then
+                if util::confirm "Guest ${_name} is in bootloader stage and cannot suspend, do you wish to force exit"; then
+                    echo "Killing ${_name}"
+                    kill "${_loadpid}"
+                    bhyvectl --destroy --vm=${_name} >/dev/null 2>&1
+                fi
+            else
+                util::warn "unable to locate process id for ${_name}"
+            fi
+        fi
+        shift
+        _name="$1"
+    done
+}
+
 # 'vm reset'
 # force reset
 #

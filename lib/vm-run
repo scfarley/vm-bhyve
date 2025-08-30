@@ -254,6 +254,9 @@ vm::run(){
         # remove any console sockets
         rm ${VM_DS_PATH}/${_name}/vtcon.* >/dev/null 2>&1
 
+        # suspend
+        [ -f "${VM_DS_PATH}/${_name}/suspending.lock" ] && break
+
         # decide what to do with exit code
         vm::handle_exit "_action" ${_exit}
         [ "${_action}" != "restart" ] && break
@@ -273,7 +276,11 @@ vm::run(){
         ifconfig "${_devices}" destroy
     done
 
-    util::log "guest" "${_name}" "stopped"
+    if [ -e "${VM_DS_PATH}/${_name}/suspending.lock" ]; then
+        util::log "guest" "${_name}" "suspended"
+    else
+        util::log "guest" "${_name}" "stopped"
+    fi
     [ -e "/dev/vmm/${_name}" ] && bhyvectl --destroy --vm=${_name} >/dev/null 2>&1
 
     vm::unlock
@@ -377,6 +384,7 @@ vm::lock(){
 #
 vm::unlock(){
     unlink "${VM_DS_PATH}/${_name}/run.lock" >/dev/null 2>&1
+    unlink "${VM_DS_PATH}/${_name}/suspending.lock" >/dev/null 2>&1
     unlink "${VM_DS_PATH}/${_name}/console" >/dev/null 2>&1
 }
 

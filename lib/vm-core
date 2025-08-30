@@ -819,7 +819,7 @@ core::suspend(){
                 echo "Suspending ${_name}"
                 # TODO: convert to function
                 hostname > "${VM_DS_PATH}/${_name}/suspending.lock"
-                bhyvectl --vm=${_name} --suspend=${VM_DS_PATH}/${_name}/${_name}.save >/dev/null 2>&1
+                bhyvectl --vm=${_name} --suspend="${VM_DS_PATH}/${_name}/${_name}.save" >/dev/null 2>&1
             elif [ -n "${_loadpind}" ]; then
                 if util::confirm "Guest ${_name} is in bootloader stage and cannot suspend, do you wish to force exit"; then
                     echo "Killing ${_name}"

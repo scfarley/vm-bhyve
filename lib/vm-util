@@ -140,7 +140,7 @@ util::check_bhyve_suspend(){
 
     config::core::get "_suspend_enabled" "suspend" "no"
     if ! util::yesno "${_suspend_enabled}"; then
-        util::warn "bhyve seems to support but administratively disabled in vm-bhyve config"
+        util::warn "bhyve seems to support suspend but disabled in vm-bhyve config"
         return 1
     fi
 

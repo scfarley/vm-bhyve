@@ -82,7 +82,6 @@
 .Op Fl n Ar netconfig
 .Ar name
 .Nm
-.Cm
 .Cm destroy
 .Op Fl f
 .Ar name
@@ -1648,7 +1647,7 @@ calls to
 will still consider the guest locked.
 .It priority
 Allows a priority to be set for a guest by using the
-.Xr nice 8
+.Xr nice 1
 facility.
 The default value is 0, and has a range from -20, which is the highest
 priority, to 20.

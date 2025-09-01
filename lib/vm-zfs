@@ -1,28 +1,6 @@
 #!/bin/sh
-#-------------------------------------------------------------------------+
-# Copyright (C) 2016 Matt Churchyard (churchers@gmail.com)
-# All rights reserved
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted providing that the following conditions
-# are met:
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-#
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-# IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
+# SPDX-License-Identifier: BSD-2-Clause
+# SPDX-FileCopyrightText: 2016 Matt Churchyard <churchers@gmail.com>
 
 # set us up for zfs use
 # we need the zfs dataset name for zfs commands, and the file system path
@@ -31,7 +9,7 @@
 # This can then be used for zfs commands, and we can retrieve the mountpoint
 # to find out the file path for bhyve
 #
-# This then overwrites $vm_dir with the file system path, so that the 
+# This then overwrites $vm_dir with the file system path, so that the
 # rest of vm-bhyve can work normally, regardless of whether we are in zfs mode
 # or not
 #
@@ -153,7 +131,7 @@ zfs::__format_options(){
 # create a snapshot of a guest
 # specify the snapshot name in zfs format guest@snap
 # if no snapshot name is specified, Y-m-d-H:M:S will be used
-# 
+#
 # @param flag (-f) force snapshot if guest is running
 # @param string _name the name of the guest to snapshot
 #
@@ -212,7 +190,7 @@ zfs::remove_snapshot(){
 # roll a guest back to a previous snapshot
 # we show zfs errors here as it will fail if the snapshot is not the most recent.
 # zfs will output an error mentioning to use '-r', and listing the snapshots
-# that will be deleted. makes sense to let user see this and just support 
+# that will be deleted. makes sense to let user see this and just support
 # that option directly
 #
 # @param flag (-r) force deletion of more recent snapshots

@@ -1,0 +1,8 @@
+task:
+  name: Lint manpages
+  matrix:
+    freebsd_instance:
+      image_family: freebsd-14-2
+
+  script:
+    - mandoc -Tlint ./vm.8

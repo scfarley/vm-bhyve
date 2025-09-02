@@ -1038,6 +1038,7 @@ core::console(){
 #
 core::configure(){
     local _name="$1"
+    local _target="$2"
 
     [ -z "${_name}" ] && util::usage
     [ -z "${EDITOR}" ] && EDITOR="vi"
@@ -1045,7 +1046,24 @@ core::configure(){
     datastore::get_guest "${_name}" || \
         util::err "cannot locate configuration file for virtual machine: ${_name}"
 
-    $EDITOR "${VM_DS_PATH}/${_name}/${_name}.conf"
+    case "$_target" in
+        meta-data|network-config|user-data)
+            [ -d "${VM_DS_PATH}/${_name}/.cloud-init" ] || \
+                util::err "cloud-init is not enabled for this guest"
+            if [ -e "${VM_DS_PATH}/${_name}/seed.iso" ]; then
+                util::confirm "cloud-init has run already. changes won't take effect. edit anyway?" || exit 0
+            fi
+
+            $EDITOR "${VM_DS_PATH}/${_name}/.cloud-init/${_target}"
+            ;;
+        "")
+            $EDITOR "${VM_DS_PATH}/${_name}/${_name}.conf"
+            ;;
+        *)
+            util::usage
+            ;;
+    esac
+
 }
 
 # 'vm iso'

@@ -278,6 +278,7 @@ To list downloaded images:
 vm-bhyve has basic support for providing cloud-init configuration to the guest. You can enable it with `-C` option
 to `vm create` command. You can also pass public SSH key to be injected into the guest with option `-k <file>`.
 The public key file can contain multiple public SSH keys, one per line, in the `authorized_keys` format.
+
 Also `vm create` has option `-n "interface=;ip=;gateway=;nameservers=;searchdomains=;hostname="` that allows to set network parameters.
 Example netconfig param: "interface=vtnet0;ip=10.0.0.2/24;gateway=10.0.0.1;nameservers=1.1.1.1,8.8.8.8;searchdomains=example.com,example.org" .
 
@@ -295,6 +296,14 @@ Example:
     Are you sure you want to continue connecting (yes/no)? yes
     Warning: Permanently added '192.168.0.91' (ECDSA) to the list of known hosts.
     Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-141-generic x86_64)
+
+### Editing cloud-init configuration
+To edit generated cloud-init configuration files, such as meta-data, network-config and user-data, specify the configuration file for the `vm configure` command.
+Please note that cloud-init typically runs only on the first boot. Any changes made after the first boot does not take effect.
+
+```
+# vm configure <name> user-data
+```
 
 ## Adding custom disks
 

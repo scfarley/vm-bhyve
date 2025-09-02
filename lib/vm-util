@@ -1,28 +1,6 @@
 #!/bin/sh
-#-------------------------------------------------------------------------+
-# Copyright (C) 2016 Matt Churchyard (churchers@gmail.com)
-# All rights reserved
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted providing that the following conditions
-# are met:
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-#
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-# IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
+# SPDX-License-Identifier: BSD-2-Clause
+# SPDX-FileCopyrightText: 2016 Matt Churchyard <churchers@gmail.com>
 
 # make sure we have the right environment
 #
@@ -64,7 +42,7 @@ util::load_module(){
 # is a valid way to check vmm is working, even though it seems reasonable.
 # the vm_disable_host_checks="yes" rc settings allows bypassing all this
 # if your system should be supported but these checks break.
-# 
+#
 # @modifies VM_NO_UG
 #
 util::check_bhyve_support(){
@@ -368,7 +346,7 @@ util::confirm(){
 
 # our own checkyesno copy
 # doesn't warn for unsupported values
-# also returns as 'yes' unless value is specifically no/off/false/0 
+# also returns as 'yes' unless value is specifically no/off/false/0
 #
 # @param _value the value to test
 # @return int 1 if set to "off/false/no/0", 0 otherwise
@@ -381,7 +359,7 @@ util::yesno(){
     case "$_value" in
         [Nn][Oo]|[Ff][Aa][Ll][Ss][Ee]|[Oo][Ff][Ff]|0)
             return 1 ;;
-        *)  return 0 ;;		
+        *)  return 0 ;;
     esac
 }
 

@@ -918,11 +918,16 @@ core::discard(){
     fi
 
     if [ ! -e "${VM_DS_PATH}/${_name}/${_name}.save" ]; then
-        util::err "no saved state exists for ${_name}"
+        if [ -z "${VM_OPT_FORCE}" ]; then
+            util::err "no saved state exists for ${_name}"
+        else
+            # When VM_OPT_FORCE is set, do not error if no saved state exists
+            return 0
+        fi
     fi
 
     # remove vm state file
-    rm \
+    rm -- \
         "${VM_DS_PATH}/${_name}/${_name}.save*" \
 
     exit $?

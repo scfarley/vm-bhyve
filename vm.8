@@ -142,9 +142,11 @@
 .Nm
 .Cm configure
 .Ar name
+.Op Ar meta-data|network-config|user-data
 .Nm
 .Cm edit
 .Ar name
+.Op Ar meta-data|network-config|user-data
 .Nm
 .Cm passthru
 .Nm
@@ -898,14 +900,17 @@ This sends a stop command to all
 instances, regardless of whether they were starting using
 .Nm
 or not.
-.It Cm configure Ar name
+.It Cm configure Ar name Op Ar meta-data|network-config|user-data
 The
 .Cm configure
 subcommand simply opens the virtual machine configuration file in your default
 editor, allowing you to easily make changes.
 Please note, changes do not take effect until the virtual machine is fully
 shutdown and restarted.
-.It Cm edit Ar name
+.Pp
+If a second argument is given, it opens the specified cloud-init configuration
+file in the default editor.
+.It Cm edit Ar name Op Ar meta-data|network-config|user-data
 An alias to the configure subcommand.
 .It Cm passthru
 The

@@ -670,6 +670,89 @@ core::stopall(){
     wait_for_pids ${_pids}
 }
 
+# 'vm suspendall'
+#
+# suspend all bhyve instances
+#
+# Unlike stopall, this will only suspend instances started by vm-bhyve,
+# as it cannot determine where to save the state file for instances
+# started by other tools.
+#
+core::suspendall()
+{
+    local _pids=$(pgrep -f 'bhyve:' | tr '\n' ' ')
+    local _stop_parallel _stop_list _running _list_rev _curr
+    local _stop_p_pids _pid
+
+    util::check_bhyve_suspend || util::err "unable to suspend the guest"
+
+    cmd::parse_args "$@"
+    : ${vm_delay:=2}
+
+    # get a list of running bhyve instances
+    _running=$(pgrep -lf 'bhyve:' | cut -d" " -f3 | tr '\n' ' ')
+    [ -z "${_running}" ] && return 0
+
+    # do we have any guests to stop in order
+    if [ -z "${VM_OPT_FORCE}" -a -n "${vm_list}" ]; then
+        # reverse the configured start order
+        for _curr in ${vm_list}; do
+            _list_rev="${_curr} ${_list_rev}"
+        done
+
+        # go through each autostart guest
+        # if running add to stop list.
+        # we are searching in reverse start order, so should get an ordered shutdown
+        for _curr in ${_list_rev}; do
+            echo "${_running}" | grep -qs "${_curr} "
+
+            if [ $? -eq 0 ]; then
+                _stop_list="${_stop_list}${_stop_list:+ }${_curr}"
+            fi
+        done
+
+        # look for anything running that isn't in the ordered stop list
+        for _curr in ${_running}; do
+            echo "${_stop_list}" | grep -qs "${_curr}\b"
+            if [ $? -ne 0 ]; then
+                _stop_parallel="${_stop_parallel}${_stop_parallel:+ }${_curr}"
+                util::getpid "_pid" "bhyve: ${_curr}\$"
+                [ $? -eq 0 ] && _stop_p_pids="${_stop_p_pids}${_stop_p_pids:+ }${_pid}"
+            fi
+        done
+    else
+        # nothing ordered, or a force suspend
+        # just do everything at once
+        _stop_parallel="${_running}"
+        _stop_p_pids="${_pids}"
+    fi
+
+    # ===== same as core::stopall() up to this line ===
+
+    echo "Beginning shutdown process (suspend)"
+
+    # suspending non-ordered guests
+    if [ -n "${_stop_parallel}" ]; then
+        echo "  * parallel suspend of non-ordered guests: ${_stop_parallel}"
+        for _curr in ${_stop_parallel}; do
+            echo "  * suspending ${_curr}"
+            core::suspend "${_curr}" >/dev/null 2>&1
+        done
+    fi
+
+    # suspending ordered guests
+    if [ -n "${_stop_list}" ]; then
+        for _curr in ${_stop_list}; do
+            echo "  * waiting ${vm_delay} second(s)" && sleep ${vm_delay}
+            echo "  * suspending ${_curr}"
+            core::suspend "${_curr}" >/dev/null 2>&1
+        done
+    fi
+
+    echo ""
+    wait_for_pids ${_pids}
+}
+
 # 'vm start'
 # start a virtual machine
 #

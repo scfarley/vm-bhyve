@@ -1,8 +1,8 @@
-name: Test
+name:  Test
 
 defaults:
   run:
-    shell: sh
+    shell:  sh
 
 on:
   push:
@@ -12,15 +12,18 @@ on:
 
 jobs:
   lint:
-    name: Lint
-    runs-on: ubuntu-latest
+    name:  Lint
+    runs-on:  ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    - name:  Checkout
+      uses:  actions/checkout@v4
 
-    - name: Check PATH
-      run: echo "${PATH}"
+    - name:  Check PATH
+      run:  echo "${PATH}"
 
-    - name: Lint manpage
-      run: /usr/bin/mandoc -T lint vm.8
+    - name:  System information
+      run:  uname -s -r
+
+    - name:  Lint manpage
+      run:  /usr/bin/mandoc -T lint vm.8

@@ -1,5 +1,9 @@
 name: Test
 
+defaults:
+  run:
+    shell: sh
+
 on:
   push:
     branches:
@@ -15,5 +19,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name:
+    - name: Check PATH
+      run: echo '${PATH}'
+
+    - name: Lint manpage
       run: mandoc -T lint vm.8

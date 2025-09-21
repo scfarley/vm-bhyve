@@ -19,11 +19,8 @@ jobs:
     - name:  Checkout
       uses:  actions/checkout@v4
 
-    - name:  Check PATH
-      run:  echo "${PATH}"
-
-    - name:  System information
-      run:  uname -s -r
-
     - name:  Lint manpage
-      run:  mandoc -T lint vm.8
+      # Lint the manpage with a mock tmux.1.
+      run:  |
+        touch tmux.1
+        mandoc -T lint vm.8

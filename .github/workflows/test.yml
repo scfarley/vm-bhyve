@@ -1,0 +1,17 @@
+name: Test
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name:
+      run: mandoc -T lint vm.8

@@ -23,4 +23,4 @@ jobs:
       run: echo "${PATH}"
 
     - name: Lint manpage
-      run: mandoc -T lint vm.8
+      run: /usr/bin/mandoc -T lint vm.8

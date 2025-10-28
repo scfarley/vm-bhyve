@@ -60,7 +60,7 @@ core::list(){
 
                     # if running and graphics, try to get vnc port
                     if config::yesno "graphics"; then
-                        _vnc=$(grep vnc "${VM_DS_PATH}/${_name}/console" 2>/dev/null |cut -d= -f2)
+                        _vnc=$(grep ^vnc "${VM_DS_PATH}/${_name}/console" 2>/dev/null |cut -d= -f2)
                         [ -z "${_vnc}" ] && _vnc="-"
                     fi
                 fi

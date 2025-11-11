@@ -164,6 +164,7 @@ Usage: vm ...
     switch create [-t type] [-i interface] [-n vlan-id] [-m mtu] [-a address/prefix-len] [-b bridge] [-p] <name>
     switch vlan <name> <vlan|0>
     switch nat <name> <on|off>
+    switch address <name> <a.b.c.d/xx|none>
     switch private <name> <on|off>
     switch add <name> <interface>
     switch remove <name> <interface>

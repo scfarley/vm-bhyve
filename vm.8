@@ -148,6 +148,9 @@
 .Cm stopall
 .Op Fl f
 .Nm
+.Cm suspendall
+.Op Fl f
+.Nm
 .Cm configure
 .Ar name
 .Op Ar meta-data|network-config|user-data
@@ -933,13 +936,28 @@ Too small a delay can cause problems, as each guest doesn't have enough time to
 claim a null modem device before the next guest starts.
 Increasing this value can be useful if you have disk-intensive guests and want
 to give each guest a chance to fully boot before the next starts.
-.It Cm stopall
+.It Xo
+.Cm stopall
+.Op Fl f
+.Xc
 Stop all running virtual machines.
 This sends a stop command to all
 .Xr bhyve 8
-instances, regardless of whether they were starting using
-.Nm
-or not.
+instances, regardless of whether they were starting using or not.
+.Pp
+If the
+.Ar -f
+option is specified, all instances are stopped in parallel.
+.It Xo
+.Cm suspendall
+.Op Fl f
+.Xc
+Suspend all running machines.
+Unlike stopall, this sends a suspend command to the instances started by vm-bhyve.
+.Pp
+If the
+.Ar -f
+option is specified, all instances are suspended in parallel.
 .It Cm configure Ar name Op Ar meta-data|network-config|user-data
 The
 .Cm configure

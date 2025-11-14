@@ -188,7 +188,8 @@ Usage: vm ...
     rename <name> <new-name>
     add [-d device] [-t type] [-s size|switch] <name>
     startall
-    stopall
+    stopall [-f]
+    suspendall [-f]
     reset  [-f] <name>
     poweroff [-f] <name>
     destroy [-f] <name>

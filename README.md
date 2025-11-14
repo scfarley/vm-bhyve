@@ -57,7 +57,7 @@ If you're not using ZFS, just create a normal directory.
 
 - [ ] Lines 3-4
 Enable vm-bhyve in /etc/rc.conf and set the dataset to use.
-If not using ZFS, just set `$vm_dir="/my/vm/folder"`.
+If not using ZFS, just set `vm_dir="/my/vm/folder"`.
 
 - [ ] Line 5
 Run the `vm init` command to create the required directories under $vm_dir and load kernel modules.
@@ -74,7 +74,7 @@ Download a copy of FreeBSD from the ftp site.
 
 - [ ] Lines 10-12
 Create a new guest using the `default.conf` template, run the installer and
-then connect to its console. At this point proceed through the installation 
+then connect to its console. At this point proceed through the installation
 as normal. By specifying the `-f` option before the install command, the guest
 will run directly on your terminal so the `console` command is not required. (Bear
 in mind that you won't get back to your terminal until the guest is fully shutdown)
@@ -87,9 +87,9 @@ To install, just run the following command inside the vm-bhyve source directory
 
     # make install
 
-If you want to run guests other than FreeBSD, you will need the grub2-bhyve package;
+If you want to run guests other than FreeBSD, you will need the UEFI firmware;
 
-    # pkg install grub2-bhyve
+    # pkg install bhyve-firmware
 
 ## Initial configuration
 
@@ -144,7 +144,7 @@ the default template:
 
 You will notice that each template is set to create one network interface. You can easily add more network
 interfaces by duplicating the two network configuration options and incrementing the number. In general you
-will not want to change the type from 'virtio-net', but you will notice the first interface is set to connect 
+will not want to change the type from 'virtio-net', but you will notice the first interface is set to connect
 to a switch called 'public'. See the next section for details on how to configure virtual switches.
 
 I recommend reading the man page or `sample-templates/config.sample` for a full list of supported template
@@ -251,7 +251,7 @@ See the man page for a full description of all available commands.
 
 ## Using cloud images
 
-You can use cloud images to create virtual machines. The `vm img` command will download the image to datastore and 
+You can use cloud images to create virtual machines. The `vm img` command will download the image to datastore and
 uncompress it if needed (.xz, .tar.gz, and .gz files are supported). The image should be in RAW or QCOW2 format.
 To use this feature you'll need install qemu-tools package:
 
@@ -299,6 +299,7 @@ Example:
     Welcome to Ubuntu 16.04.5 LTS (GNU/Linux 4.4.0-141-generic x86_64)
 
 ### Editing cloud-init configuration
+
 To edit generated cloud-init configuration files, such as meta-data, network-config and user-data, specify the configuration file for the `vm configure` command.
 Please note that cloud-init typically runs only on the first boot. Any changes made after the first boot does not take effect.
 

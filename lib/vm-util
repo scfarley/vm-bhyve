@@ -145,7 +145,7 @@ util::restart_service(){
 # show version
 #
 util::version(){
-    echo "vm-bhyve: Bhyve virtual machine management v${VERSION} (rev. ${VERSION_INT})"
+    echo "vm-bhyve: Bhyve virtual machine management v${VERSION}"
 }
 
 # show version & usage information
